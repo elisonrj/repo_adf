@@ -1,0 +1,206 @@
+{
+	"name": "pratica_02",
+	"properties": {
+		"description": "PRATICA 02\n\n1 - CRIAR UM PIPELINE PARA REALIZAR OS SEGUINTES PASSOS:\n1.1 - LER OS ARQUIVOS PARQUET COM O GET METADATA - ok\n1.2 - PASSAR OS ITENS LISTADOS PARA O FOR EACH - ok\n1.3 - COPIAR OS DADOS DOS ARQUIVOS PARQUET PARA UMA TABELA NO AZURE SQL - ok\nDATABASE UTILIZANDO O COPY DATA\n1.4 - ANALISAR OS DADOS DENTRO DAS TABELAS - ok\n1.5 - RE-EXECUTAR O PIPELINE PARA GERAR DADOS DUPLICADOS\n2 - CRIAR DUAS STORED PROCEDURES NO AZURE SQL PARA REMOVER AS LINHAS DUPLICADAS DAS NOVAS TABELAS\n3 - REALIZAR A CHAMADA DAS STORED PROCEDURES NO PIPELINE\n\nremoção do parquet no for each: @replace(item().name, '.parquet', '')\n\n\ncreate procedure SalesLT.usp_remove_cores_duplicadas\nas\nwith cte as\n(\nselect \nrow_number () OVER(PARTITION BY id ORDER BY id) as rank_cores_duplicadas,\n*\nfrom [SalesLT].[csvCor]\n\n)\ndelete from cte\nwhere rank_cores_duplicadas > 1\n\n\ncreate procedure SalesLT.usp_remove_cidades_duplicadas\nas\nwith cte as\n(\nselect \nrow_number () OVER(PARTITION BY cod_cidade ORDER BY cod_cidade) as rank_cidades_duplicadas,\n*\nfrom [SalesLT].[cidades]\n)\ndelete from cte\nwhere rank_cidades_duplicadas > 1\n\nhttps://www.sqlshack.com/overview-of-sql-rank-functions/",
+		"activities": [
+			{
+				"name": "listar_parquet",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "ds_generico_parquet",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "parquetfiles",
+							"file_name": "*"
+						}
+					},
+					"fieldList": [
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					}
+				}
+			},
+			{
+				"name": "lista_parquet",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "filtra_arquivos",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('filtra_arquivos').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "parquet_to_sql",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "ParquetSource",
+									"storeSettings": {
+										"type": "AzureBlobFSReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									}
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"tableOption": "autoCreate",
+									"disableMetricsCollection": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "ds_generico_parquet",
+									"type": "DatasetReference",
+									"parameters": {
+										"container_name": "parquetfiles",
+										"file_name": {
+											"value": "@replace(item().name,'.parquet','')",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "ds_generico_azuresql",
+									"type": "DatasetReference",
+									"parameters": {
+										"schemaName": "SalesLT",
+										"tableName": {
+											"value": "@replace(item().name,'.parquet','')",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"name": "proc_cidade",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "lista_parquet",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[SalesLT].[usp_remove_cidades_duplicadas]"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_azuresql",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "proc_cor",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "lista_parquet",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[SalesLT].[usp_remove_cores_duplicadas]"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_azuresql",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "filtra_arquivos",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "listar_parquet",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('listar_parquet').output.childitems",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@equals(item().type,'File')",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "adf_handson_01"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-11-20T19:41:55Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
