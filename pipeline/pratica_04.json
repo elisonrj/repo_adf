@@ -1,0 +1,67 @@
+{
+	"name": "pratica_04",
+	"properties": {
+		"description": "PRATICA 04\n\n1 - AJUSTAR O PIPELINE 02 PARA FILTRAR SOMENTE ARQUIVOS. ADICIONAR O COMPONENTE DE FILTER - OK\n\n2 - CRIAR UM PIPELINE CHAMADO PRATICA_04 PARA REALIZAR OS SEGUINTES PASSOS:\n\n1.1 - COLOCAR 3 ACTIVITIES EXECUTE PIPELINE FAZENDO REFERENCIA AOS PIPELINES PRATICA 01, 02 E 03 - \n\n2 - VERIFICAR A EXECUÇÃO DO PIPELINE - \n\n\n\n\nPARAMETROS DO FILTER - pratica_02\n--------------------------------------------------------\nItems = @activity('listar parquet').output.childItems\nCondition = @equals(item().type, 'File')\n\nPARAMETROS DO FOREACH - pratica_02\n-----------------------------------------\n@activity('filtro_arquivos').output.value",
+		"activities": [
+			{
+				"name": "exec_pratica_01",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pratica_01",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "exec_pratica_02",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "exec_pratica_01",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pratica_02",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "exec_pratica_03",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "exec_pratica_02",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pratica_03",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "adf_handson_01"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-11-20T19:47:17Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
