@@ -62,9 +62,9 @@
 						"referenceName": "ds_generico_csv",
 						"type": "DatasetReference",
 						"parameters": {
-							"containerName": "pessoas.csv",
-							"fileName": ";",
-							"separatorName": "files"
+							"containerName": "files",
+							"fileName": "pessoas.csv",
+							"separatorName": ";"
 						}
 					}
 				]
@@ -145,7 +145,7 @@
 				]
 			},
 			{
-				"name": "apaga_arquivo_container",
+				"name": "delete_file_container",
 				"type": "Delete",
 				"dependsOn": [
 					{

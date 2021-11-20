@@ -28,6 +28,44 @@
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "CodError",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "CodError",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "idioma",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "idioma",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Descricao",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "Descricao",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
@@ -55,6 +93,33 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "proc_erros",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "local_sql_to_azure_sql",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[SalesLT].[usp_remove_erros_duplicados]"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_azuresql",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"folder": {
