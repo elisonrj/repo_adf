@@ -1,0 +1,31 @@
+{
+	"name": "tr_test",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "pratica_08",
+					"type": "PipelineReference"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "pratica_09",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 5,
+				"startTime": "2021-11-21T17:25:00Z",
+				"endTime": "2021-11-21T17:40:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}
