@@ -22,8 +22,8 @@
 			"recurrence": {
 				"frequency": "Minute",
 				"interval": 5,
-				"startTime": "2021-11-21T17:25:00Z",
-				"endTime": "2021-11-21T17:40:00Z",
+				"startTime": "2021-11-21T18:30:00Z",
+				"endTime": "2021-11-21T19:00:00Z",
 				"timeZone": "UTC"
 			}
 		}
