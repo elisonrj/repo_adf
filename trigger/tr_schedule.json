@@ -2,11 +2,17 @@
 	"name": "tr_schedule",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Stopped",
+		"runtimeState": "Started",
 		"pipelines": [
 			{
 				"pipelineReference": {
 					"referenceName": "pratica_08",
+					"type": "PipelineReference"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "pratica_09",
 					"type": "PipelineReference"
 				}
 			}
