@@ -22,9 +22,9 @@
 			"recurrence": {
 				"frequency": "Minute",
 				"interval": 5,
-				"startTime": "2021-11-21T18:30:00Z",
-				"endTime": "2021-11-21T19:00:00Z",
-				"timeZone": "UTC"
+				"startTime": "2021-11-21T20:30:00",
+				"endTime": "2021-11-21T21:00:00",
+				"timeZone": "E. South America Standard Time"
 			}
 		}
 	}
