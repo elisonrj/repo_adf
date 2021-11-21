@@ -2,14 +2,15 @@
 	"name": "tr_test",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Stopped",
+		"runtimeState": "Started",
 		"pipelines": [],
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
 				"frequency": "Minute",
-				"interval": 15,
-				"startTime": "2021-11-21T20:16:00Z",
+				"interval": 5,
+				"startTime": "2021-11-21T17:25:00Z",
+				"endTime": "2021-11-21T17:40:00Z",
 				"timeZone": "UTC"
 			}
 		}
