@@ -20,8 +20,8 @@
 						"referenceName": "ds_generico_parquet",
 						"type": "DatasetReference",
 						"parameters": {
-							"container_name": "parquetfiles",
-							"file_name": "*"
+							"container": "parquetfiles",
+							"folder": "*"
 						}
 					},
 					"fieldList": [
@@ -93,8 +93,8 @@
 									"referenceName": "ds_generico_parquet",
 									"type": "DatasetReference",
 									"parameters": {
-										"container_name": "parquetfiles",
-										"file_name": {
+										"container": "parquetfiles",
+										"folder": {
 											"value": "@replace(item().name,'.parquet','')",
 											"type": "Expression"
 										}
@@ -197,7 +197,7 @@
 			}
 		],
 		"folder": {
-			"name": "adf_init_udemy_luiz_santana/adf_handson_01"
+			"name": "pipe_adf_init_udemy_luiz_santana/adf_handson_01"
 		},
 		"annotations": [],
 		"lastPublishTime": "2021-11-20T19:41:55Z"

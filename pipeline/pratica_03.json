@@ -106,8 +106,8 @@
 									"referenceName": "ds_generico_parquet",
 									"type": "DatasetReference",
 									"parameters": {
-										"container_name": "parquetfiles/table_sql/",
-										"file_name": {
+										"container": "parquetfiles/table_sql/",
+										"folder": {
 											"value": "@item().table_name",
 											"type": "Expression"
 										}
@@ -120,7 +120,7 @@
 			}
 		],
 		"folder": {
-			"name": "adf_init_udemy_luiz_santana/adf_handson_01"
+			"name": "pipe_adf_init_udemy_luiz_santana/adf_handson_01"
 		},
 		"annotations": [],
 		"lastPublishTime": "2021-11-20T19:41:55Z"

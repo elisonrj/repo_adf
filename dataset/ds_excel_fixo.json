@@ -5,6 +5,9 @@
 			"referenceName": "ls_datalake",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "ds_adf_init_udemy_luiz_santana"
+		},
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {

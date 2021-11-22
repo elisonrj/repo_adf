@@ -5,6 +5,9 @@
 			"referenceName": "ls_azuresql",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "ds_adf_init_udemy_luiz_santana"
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [

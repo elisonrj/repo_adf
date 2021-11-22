@@ -6,12 +6,18 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"container_name": {
+			"container": {
 				"type": "string"
 			},
-			"file_name": {
+			"folder": {
+				"type": "string"
+			},
+			"file": {
 				"type": "string"
 			}
+		},
+		"folder": {
+			"name": "ds_adf_init_udemy_luiz_santana"
 		},
 		"annotations": [],
 		"type": "Parquet",
@@ -19,11 +25,15 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": {
-					"value": "@concat(dataset().file_name,'.parquet')",
+					"value": "@dataset().file",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().folder",
 					"type": "Expression"
 				},
 				"fileSystem": {
-					"value": "@dataset().container_name",
+					"value": "@dataset().container",
 					"type": "Expression"
 				}
 			},
