@@ -100,7 +100,7 @@
 						"parameters": {
 							"container": "bronze",
 							"folder": {
-								"value": "sakila/actor/dtingestion=@{utcnow('yyyyMMdd')}",
+								"value": "sakila/actor/@{utcnow('yyyyMMdd')}",
 								"type": "Expression"
 							},
 							"file": "file.parquet"
