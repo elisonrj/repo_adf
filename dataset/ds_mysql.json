@@ -1,0 +1,35 @@
+{
+	"name": "ds_mysql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_mysql_local",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"dbName": {
+					"value": "@dataset().dbName",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"tbName": {
+				"type": "string"
+			},
+			"dbName": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "ds_adf_init_udemy_luiz_santana/ds_fund_eng_dados_big_data_azure"
+		},
+		"annotations": [],
+		"type": "MySqlTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": {
+				"value": "@dataset().tbName",
+				"type": "Expression"
+			}
+		}
+	}
+}
