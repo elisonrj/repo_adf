@@ -1,0 +1,22 @@
+{
+	"name": "ls_mysql_local",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"parameters": {
+			"dbName": {
+				"type": "string",
+				"defaultValue": "sakila"
+			}
+		},
+		"annotations": [],
+		"type": "MySql",
+		"typeProperties": {
+			"connectionString": "server=127.0.0.1;port=3306;database=@{linkedService().dbName};user=root;sslmode=1;usesystemtruststore=0",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJlZjk3ODYxNy03ZTNiLTQ4NjItYTQyZi0xZTlhYTlmMzkxYjkiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "iradf",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
