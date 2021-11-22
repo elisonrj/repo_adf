@@ -1,5 +1,5 @@
 {
-	"name": "ingest_sakila_actor",
+	"name": "ingest_sakila_country",
 	"properties": {
 		"activities": [
 			{
@@ -88,7 +88,7 @@
 						"referenceName": "ds_mysql",
 						"type": "DatasetReference",
 						"parameters": {
-							"tbName": "actor",
+							"tbName": "country",
 							"dbName": "sakila"
 						}
 					}
@@ -100,7 +100,7 @@
 						"parameters": {
 							"container": "bronze",
 							"folder": {
-								"value": "sakila/actor/dtingestion=@{utcnow('yyyyMMdd')}",
+								"value": "sakila/country/dtingestion=@{utcnow('yyyyMMdd')}",
 								"type": "Expression"
 							},
 							"file": "file.parquet"
