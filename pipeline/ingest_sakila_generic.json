@@ -45,7 +45,8 @@
 							"tbName": {
 								"value": "@pipeline().parameters.tbName",
 								"type": "Expression"
-							}
+							},
+							"dbName": "sakila"
 						}
 					}
 				],
@@ -59,7 +60,7 @@
 								"value": "sakila/{@pipeline().parameters.tbName}dtIngestion=@{utcnow('yyyyMMdd')}",
 								"type": "Expression"
 							},
-							"file": "*"
+							"file": "file.parquet"
 						}
 					}
 				]
