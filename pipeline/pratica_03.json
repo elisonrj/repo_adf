@@ -107,10 +107,8 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"container": "parquetfiles/table_sql/",
-										"folder": {
-											"value": "@item().table_name",
-											"type": "Expression"
-										}
+										"folder": "*",
+										"file": "@item().table_name"
 									}
 								}
 							]

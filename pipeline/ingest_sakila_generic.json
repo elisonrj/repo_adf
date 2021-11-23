@@ -45,6 +45,10 @@
 							"tbName": {
 								"value": "@pipeline().parameters.tbName",
 								"type": "Expression"
+							},
+							"dbName": {
+								"value": "@pipeline().parameters.dbName",
+								"type": "Expression"
 							}
 						}
 					}
@@ -58,7 +62,8 @@
 							"folder": {
 								"value": "sakila/{@pipeline().parameters.tbName}dtIngestion=@{utcnow('yyyyMMdd')}",
 								"type": "Expression"
-							}
+							},
+							"file": "*"
 						}
 					}
 				]
@@ -66,6 +71,9 @@
 		],
 		"parameters": {
 			"tbName": {
+				"type": "string"
+			},
+			"dbName": {
 				"type": "string"
 			}
 		},

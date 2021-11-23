@@ -21,7 +21,8 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"container": "parquetfiles",
-							"folder": "*"
+							"folder": "parquetfiles",
+							"file": "*"
 						}
 					},
 					"fieldList": [
@@ -94,10 +95,8 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"container": "parquetfiles",
-										"folder": {
-											"value": "@replace(item().name,'.parquet','')",
-											"type": "Expression"
-										}
+										"folder": "*",
+										"file": "@replace(item().name,'.parquet','')"
 									}
 								}
 							],

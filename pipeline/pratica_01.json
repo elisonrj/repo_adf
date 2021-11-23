@@ -142,10 +142,8 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"container": "parquetfiles",
-										"folder": {
-											"value": "@replace(item().name,'.csv','')",
-											"type": "Expression"
-										}
+										"folder": "*",
+										"file": "@replace(item().name,'.csv','')"
 									}
 								}
 							]
