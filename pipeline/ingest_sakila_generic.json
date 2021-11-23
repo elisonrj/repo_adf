@@ -45,8 +45,7 @@
 							"tbName": {
 								"value": "@pipeline().parameters.tbName",
 								"type": "Expression"
-							},
-							"dbName": "sakila"
+							}
 						}
 					}
 				],
