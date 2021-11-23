@@ -1,0 +1,77 @@
+{
+	"name": "ingest_sakila_generic",
+	"properties": {
+		"activities": [
+			{
+				"name": "IngestData",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "MySqlSource"
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_mysql",
+						"type": "DatasetReference",
+						"parameters": {
+							"tbName": {
+								"value": "@pipeline().parameters.tbName",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_generico_parquet",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "bronze",
+							"folder": {
+								"value": "sakila/{@pipeline().parameters.tbName}dtIngestion=@{utcnow('yyyyMMdd')}",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"tbName": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "pipe_fund_eng_dados_big_data_azure"
+		},
+		"annotations": []
+	}
+}

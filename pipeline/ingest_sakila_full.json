@@ -1,0 +1,53 @@
+{
+	"name": "ingest_sakila_full",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('tableList')",
+						"type": "Expression"
+					},
+					"batchCount": 4,
+					"activities": [
+						{
+							"name": "ingestData",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "ingest_sakila_generic",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"tbName": {
+										"value": "@item()",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		],
+		"variables": {
+			"tableList": {
+				"type": "Array",
+				"defaultValue": [
+					"[`actor`, `address`, `category`, `city`, `country`, `customer`, `film`, `film_actor`, `film_category`, `film_text`, `inventory`, `language`, `payment`, `rental`, `staff`, `store`]"
+				]
+			}
+		},
+		"folder": {
+			"name": "pipe_fund_eng_dados_big_data_azure"
+		},
+		"annotations": []
+	}
+}
