@@ -45,10 +45,6 @@
 							"tbName": {
 								"value": "@pipeline().parameters.tbName",
 								"type": "Expression"
-							},
-							"dbName": {
-								"value": "@pipeline().parameters.dbName",
-								"type": "Expression"
 							}
 						}
 					}
